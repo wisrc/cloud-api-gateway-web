@@ -1,4 +1,5 @@
 import fetch from 'dva/fetch';
+import router from 'umi/router';
 
 export const dva = {
   config: {
@@ -30,12 +31,15 @@ export function patchRoutes(routes) {
 }
 
 export function render(oldRender) {
-  fetch('/api/auth_routes')
+  fetch('/server/gateway/auth/routes')
     .then(res => res.json())
     .then(
       ret => {
         authRoutes = ret;
         oldRender();
+        if (ret != null && ( ret.code === 200403 || ret.code === 403)) {
+            router.push('/user/login')
+        }
       },
       () => {
         oldRender();

@@ -3,6 +3,7 @@ import { notification } from 'antd';
 import router from 'umi/router';
 import hash from 'hash.js';
 import { isAntdPro } from './utils';
+import Cookies from 'js-cookie';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -80,6 +81,7 @@ export default function request(url, option) {
 
   const defaultOptions = {
     credentials: 'include',
+    'Authorization': Cookies.get('Authorization'),
   };
   const newOptions = { ...defaultOptions, ...options };
   if (
@@ -141,7 +143,7 @@ export default function request(url, option) {
       }
       // environment should not be used
       if (status === 403) {
-        router.push('/exception/403');
+        router.push('/user/login')
         return;
       }
       if (status <= 504 && status >= 500) {

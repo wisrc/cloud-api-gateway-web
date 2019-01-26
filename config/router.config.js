@@ -50,6 +50,10 @@ export default [
             name: 'manage',
             component: './Gateway/Index',
           },
+          {
+            path: '/gateway/dynamic/routes/add',
+            component: './Gateway/AddRoute',
+          }
         ],
       },
       // forms

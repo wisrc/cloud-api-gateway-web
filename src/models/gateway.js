@@ -1,4 +1,5 @@
-import { queryGatewayRoutes } from '@/services/gateway';
+import { queryGatewayRoutes, addRoute, refresh } from '@/services/gateway';
+import router from 'umi/router';
 
 export default {
   namespace: 'gatewayRoutes',
@@ -18,6 +19,22 @@ export default {
         console.log('请求发生错误：', response);
       }
     },
+    *add({payload}, {call, put}){
+      const response = yield call(addRoute, payload);
+      if (response != null && response.code == 200) {
+         router.push('/gateway/dynamic/routes')
+      } else {
+        console.log(response)
+      }
+    },
+    *refresh({_}, {call, put}) {
+        const response = yield call(refresh);
+        if (response != null && response.code == 200) {
+           console.log('refresh successfully');
+        } else {
+          console.log(response);
+        }
+    }
   },
 
   reducers: {
