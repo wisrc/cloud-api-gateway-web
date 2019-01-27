@@ -29,8 +29,8 @@ const checkStatus = response => {
   }
   const errortext = codeMessage[response.status] || response.statusText;
   notification.error({
-    message: `请求错误 ${response.status}: ${response.url}`,
-    description: errortext,
+    message: `非常抱歉，请求服务发生错误`,
+    description: `异常信息是：${response.status} - ${errortext} 请求地址[${response.url}]`,
   });
   const error = new Error(errortext);
   error.name = response.status;
@@ -126,7 +126,9 @@ export default function request(url, option) {
     .then(response => {
       // DELETE and 204 do not return data by default
       // using .json will report an error.
-      if (newOptions.method === 'DELETE' || response.status === 204) {
+      // 去掉 DELETE 方法不返回JSON格式数据的限制，modify：hzwy23@163.com 2019-01-27
+      // if (newOptions.method === 'DELETE' || response.status === 204) {
+      if (response.status === 204) {
         return response.text();
       }
       return response.json();

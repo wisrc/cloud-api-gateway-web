@@ -11,7 +11,7 @@ import {
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import FormItem from 'antd/lib/form/FormItem';
-import styles from './AddRoute.less';
+import styles from './UpdateRoute.less';
 import router from 'umi/router';
 import { connect } from 'dva';
 
@@ -36,10 +36,10 @@ class AddRoute extends Component {
      * 新增动态路由信息
      * @param 动态路由参数
      */
-    add = (params) => {
+    update = (params) => {
         const {dispatch} = this.props
         dispatch({
-          type: 'gatewayRoutes/add',
+          type: 'gatewayRoutes/update',
           payload: params,
         });
     }
@@ -51,7 +51,11 @@ class AddRoute extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
           if (!err) {
-            this.add(values)
+            const {
+                id
+            } = this.props.location.state
+            values.id = id;
+            this.update(values)
           }
         });
     }
@@ -59,6 +63,20 @@ class AddRoute extends Component {
     render(){
 
         const { getFieldDecorator } = this.props.form;
+
+        const {
+            id,
+            path,
+            serviceId,
+            url,
+            stripPrefix,
+            retryable,
+            enabled,
+            domainId,
+            apiDoc,
+            apiName
+        } = this.props.location.state
+
         const {submiting} = this.props;
 
         const formItemLayout = {
@@ -73,7 +91,7 @@ class AddRoute extends Component {
         };
 
         return (
-          <PageHeaderWrapper title="添加动态路由">
+          <PageHeaderWrapper title="编辑动态路由">
             <Card>
                 <Form onSubmit={this.check}>
                     <Form.Item
@@ -81,6 +99,7 @@ class AddRoute extends Component {
                         label="路由"
                         hasFeedback>
                         {getFieldDecorator('path', {
+                            initialValue: path,
                             rules: [{
                                 required: true,
                                 message: '请输入路由地址，如: /gateway/**',
@@ -93,8 +112,9 @@ class AddRoute extends Component {
                         {...formItemLayout}
                         label="服务ID">
                         {getFieldDecorator('serviceId',{
+                            initialValue: serviceId,
                         })(
-                            <Input placeholder="微服务名称 {spring.application.name}"></Input>
+                            <Input></Input>
                         )}
                     </FormItem>
                     <FormItem
@@ -102,8 +122,9 @@ class AddRoute extends Component {
                         label="服务URL地址"
                         >
                         {getFieldDecorator('url',{
+                            initialValue: url,
                         })(
-                            <Input placeholder="转发地址，如：https://localhost:8080/hello/demo"></Input>
+                            <Input></Input>
                         )}
                     </FormItem>
                     <FormItem
@@ -111,7 +132,7 @@ class AddRoute extends Component {
                         label="忽略前缀"
                         >
                         {getFieldDecorator('stripPrefix',{
-                            initialValue: true
+                            initialValue: stripPrefix,
                         })(
                             <RadioGroup>
                                 <Radio value={true}>是</Radio>
@@ -124,7 +145,7 @@ class AddRoute extends Component {
                         label="是否有效"
                         >
                         {getFieldDecorator('enabled',{
-                            initialValue: true
+                            initialValue: enabled
                         })(
                             <RadioGroup>
                                 <Radio value={true}>是</Radio>
@@ -137,7 +158,7 @@ class AddRoute extends Component {
                         label="是否重试"
                         >
                         {getFieldDecorator('retryable',{
-                            initialValue: true
+                            initialValue: retryable
                         })(
                             <RadioGroup>
                                 <Radio value={true}>是</Radio>
@@ -150,6 +171,7 @@ class AddRoute extends Component {
                         label="服务中文名"
                         >
                         {getFieldDecorator('apiName',{
+                            initialValue: apiName
                         })(
                             <Input></Input>
                         )}
@@ -159,6 +181,7 @@ class AddRoute extends Component {
                         label="所属域"
                         >
                         {getFieldDecorator('domainId',{
+                            initialValue: domainId,
                         })(
                             <Input></Input>
                         )}
@@ -168,6 +191,7 @@ class AddRoute extends Component {
                         label="API文档"
                         >
                         {getFieldDecorator('apiDoc',{
+                            initialValue: apiDoc
                         })(
                             <Input placeholder="https://localhost:8080/demo/swagger-ui.html"></Input>
                         )}
