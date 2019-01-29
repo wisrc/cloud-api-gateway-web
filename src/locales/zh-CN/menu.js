@@ -35,6 +35,7 @@ export default {
   'menu.account.settings': '个人设置',
   'menu.account.trigger': '触发报错',
   'menu.account.logout': '退出登录',
-  'menu.gateway': '网关',
-  'menu.gateway.manage': '配置管理',
+  'menu.gateway': '网关管理',
+  'menu.gateway.manage': '路由管理',
+  'menu.gateway.whitelist': '白名单管理',
 };

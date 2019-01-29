@@ -6,12 +6,13 @@ import {
   Table,
   Input,
   Radio,
-  Divider
+  Divider,
+  Select
 } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import FormItem from 'antd/lib/form/FormItem';
-import styles from './UpdateRoute.less';
+import styles from './WhiteListupdate.less';
 import router from 'umi/router';
 import { connect } from 'dva';
 
@@ -19,9 +20,9 @@ const RadioGroup = Radio.Group;
 
 
 @Form.create()
-@connect(({gatewayRoutes, loading}) => ({
-    gatewayRoutes,
-    submiting: loading.effects['gatewayRoutes/update']
+@connect(({whitelist, loading}) => ({
+    whitelist,
+    submiting: loading.effects['whitelist/update']
 }))
 class AddRoute extends Component {
 
@@ -29,7 +30,7 @@ class AddRoute extends Component {
      * 取消新增操作，返回动态路由配置列表
      */
     cancel = () => {
-        router.push('/gateway/dynamic/routes')
+        router.push('/gateway/whitelist/routes')
     }
 
     /**
@@ -39,7 +40,7 @@ class AddRoute extends Component {
     update = (params) => {
         const {dispatch} = this.props
         dispatch({
-          type: 'gatewayRoutes/update',
+          type: 'whitelist/update',
           payload: params,
         });
     }
@@ -63,18 +64,12 @@ class AddRoute extends Component {
     render(){
 
         const { getFieldDecorator } = this.props.form;
-
         const {
             id,
             path,
-            serviceId,
-            url,
-            stripPrefix,
-            retryable,
+            method,
             enabled,
             domainId,
-            apiDoc,
-            apiName
         } = this.props.location.state
 
         const {submiting} = this.props;
@@ -91,10 +86,10 @@ class AddRoute extends Component {
         };
 
         return (
-          <PageHeaderWrapper title="编辑动态路由">
+          <PageHeaderWrapper title="编辑白名单">
             <Card>
                 <Form onSubmit={this.check}>
-                    <Form.Item
+                    <FormItem
                         {...formItemLayout}
                         label="路由"
                         hasFeedback>
@@ -107,37 +102,23 @@ class AddRoute extends Component {
                         })(
                             <Input placeholder="请输入路由地址,如: /gateway/**" />
                         )}
-                    </Form.Item>
-                    <FormItem
-                        {...formItemLayout}
-                        label="服务ID">
-                        {getFieldDecorator('serviceId',{
-                            initialValue: serviceId,
-                        })(
-                            <Input></Input>
-                        )}
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label="服务URL地址"
-                        >
-                        {getFieldDecorator('url',{
-                            initialValue: url,
+                        label="请求方法">
+                        {getFieldDecorator('method',{
+                            initialValue: method,
                         })(
-                            <Input></Input>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="忽略前缀"
-                        >
-                        {getFieldDecorator('stripPrefix',{
-                            initialValue: stripPrefix,
-                        })(
-                            <RadioGroup>
-                                <Radio value={true}>是</Radio>
-                                <Radio value={false}>否</Radio>
-                            </RadioGroup>
+                          <Select
+                            showSearch
+                            placeholder="请求方法"
+                            optionFilterProp="children"
+                          >
+                            <Option value="GET">GET</Option>
+                            <Option value="POST">POST</Option>
+                            <Option value="PUT">PUT</Option>
+                            <Option value="DELETE">DELETE</Option>
+                          </Select>
                         )}
                     </FormItem>
                     <FormItem
@@ -155,45 +136,12 @@ class AddRoute extends Component {
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label="是否重试"
-                        >
-                        {getFieldDecorator('retryable',{
-                            initialValue: retryable
-                        })(
-                            <RadioGroup>
-                                <Radio value={true}>是</Radio>
-                                <Radio value={false}>否</Radio>
-                            </RadioGroup>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="服务中文名"
-                        >
-                        {getFieldDecorator('apiName',{
-                            initialValue: apiName
-                        })(
-                            <Input></Input>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
                         label="所属域"
                         >
                         {getFieldDecorator('domainId',{
                             initialValue: domainId,
                         })(
                             <Input></Input>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="API文档"
-                        >
-                        {getFieldDecorator('apiDoc',{
-                            initialValue: apiDoc
-                        })(
-                            <Input placeholder="https://localhost:8080/demo/swagger-ui.html"></Input>
                         )}
                     </FormItem>
                     <Divider />

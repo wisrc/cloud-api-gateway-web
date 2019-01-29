@@ -7,14 +7,14 @@ import {
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { connect } from 'dva';
-import styles from './Index.less'
+import styles from './WhiteListIndex.less'
 import router from 'umi/router';
 
-@connect(({ gatewayRoutes, loading }) => ({
-  gatewayRoutes,
-  loading: loading.models.gatewayRoutes,
+@connect(({ whitelist, loading }) => ({
+    whitelist,
+    loading: loading.models.whitelist,
 }))
-class Gateway extends Component {
+class WhiteListIndex extends Component {
   columns = [
     {
       title: '序号',
@@ -30,38 +30,10 @@ class Gateway extends Component {
       align: 'left',
     },
     {
-      title: '微服务ID',
-      dataIndex: 'serviceId',
-      align: 'left',
-    },
-    {
-      title: '微服务地址',
-      dataIndex: 'url',
-      align: 'left',
-    },
-    {
-      title: '忽略前缀',
+      title: '请求方法',
+      dataIndex: 'method',
       width: 80,
-      dataIndex: 'stripPrefix',
-      align: 'center',
-      render: (text, record)=>{
-        const desc = text === true ? '是' : '否';
-        return (
-          desc
-        )
-      }
-    },
-    {
-      title: '重试',
-      width:50,
-      dataIndex: 'retryable',
-      align: 'center',
-      render: (text, record)=>{
-          const desc = text === true ? '是' : '否';
-          return (
-            desc
-          )
-      }
+      align: 'left',
     },
     {
       title: '生效',
@@ -76,22 +48,29 @@ class Gateway extends Component {
       }
     },
     {
-      title: '路由名称',
-      dataIndex: 'apiName',
-      align: 'center',
-    },
-    {
       title: '所属域',
       dataIndex: 'domainId',
       align: 'center',
     },
     {
-      title: '描述简介',
-      dataIndex: 'apiDoc',
-      align: 'left',
-      render: (text, record, index) => (
-          <a target="blank" href={text}>{text}</a>
-      )
+        title: '创建人',
+        dataIndex: 'createBy',
+        align: 'center',
+    },
+    {
+        title: '创建时间',
+        dataIndex: 'createTime',
+        align: 'center',
+    },
+    {
+        title: '修改人',
+        dataIndex: 'updateBy',
+        align: 'center',
+    },
+    {
+        title: '修改时间',
+        dataIndex: 'updateTime',
+        align: 'center',
     },
     {
       title: '操作',
@@ -107,22 +86,13 @@ class Gateway extends Component {
   ];
 
   add = () => {
-      router.push('/gateway/dynamic/routes/add');
-  }
-
-  refresh = () => {
-    const {dispatch} = this.props;
-    dispatch({
-      type: 'gatewayRoutes/refresh'
-    }).then(() => {
-      this.getRoutes()
-    })
+      router.push('/gateway/whitelist/routes/add');
   }
 
   delete = (item) => {
     const { dispatch } = this.props;
     dispatch({
-      type:'gatewayRoutes/deleteRoute',
+      type:'whitelist/delete',
       payload: item.id
     }).then(() => {
       this.getRoutes()
@@ -131,15 +101,15 @@ class Gateway extends Component {
 
   update = (record) => {
     router.push({
-      pathname: '/gateway/dynamic/routes/update',
+      pathname: '/gateway/whitelist/routes/update',
       state: record,
     })
   }
 
   getRoutes = () => {
-    const { dispatch, gatewayRoutes } = this.props;
+    const { dispatch } = this.props;
     dispatch({
-      type: 'gatewayRoutes/fetch',
+      type: 'whitelist/fetch',
     });
   }
   
@@ -148,21 +118,20 @@ class Gateway extends Component {
   }
 
   render() {
-    const { gatewayRoutes, loading } = this.props;
+    const { whitelist, loading } = this.props;
 
     return (
-      <PageHeaderWrapper title="动态路由管理">
+      <PageHeaderWrapper title="白名单管理">
         <Card>
           <div className={styles.btnGroup}>
               <Button onClick={this.add} className={styles.btnItem} type="primary" ghost>新增</Button>
-              <Button onClick={this.refresh} className={styles.btnItem} type="primary" ghost>刷新</Button>
           </div>
           <Table
             rowKey='id'
             bordered
             size="small"
             loading={loading}
-            dataSource={gatewayRoutes.gatewayRoutesList}
+            dataSource={whitelist.whiteList}
             columns={this.columns}
           />
         </Card>
@@ -171,4 +140,4 @@ class Gateway extends Component {
   }
 }
 
-export default Gateway;
+export default WhiteListIndex;

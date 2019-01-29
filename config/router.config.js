@@ -57,7 +57,20 @@ export default [
           {
             path: '/gateway/dynamic/routes/update',
             component: './Gateway/UpdateRoute',
-          }
+          },
+          {
+            path: '/gateway/whitelist/routes',
+            name: 'whitelist',
+            component: './Gateway/WhiteListIndex',
+          },
+          {
+            path: '/gateway/whitelist/routes/add',
+            component: './Gateway/WhiteListAdd',
+          },
+          {
+            path: '/gateway/whitelist/routes/update',
+            component: './Gateway/WhiteListUpdate',
+          },
         ],
       },
       {

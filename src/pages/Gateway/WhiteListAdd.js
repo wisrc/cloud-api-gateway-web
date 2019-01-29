@@ -6,22 +6,24 @@ import {
   Table,
   Input,
   Radio,
-  Divider
+  Divider,
+  Select
 } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import FormItem from 'antd/lib/form/FormItem';
-import styles from './UpdateRoute.less';
+import styles from './WhiteListAdd.less';
 import router from 'umi/router';
 import { connect } from 'dva';
 
 const RadioGroup = Radio.Group;
 
+const Option = Select.Option;
 
 @Form.create()
-@connect(({gatewayRoutes, loading}) => ({
-    gatewayRoutes,
-    submiting: loading.effects['gatewayRoutes/update']
+@connect(({whitelist, loading}) => ({
+    whitelist,
+    submiting: loading.effects['whitelist/add']
 }))
 class AddRoute extends Component {
 
@@ -29,17 +31,17 @@ class AddRoute extends Component {
      * 取消新增操作，返回动态路由配置列表
      */
     cancel = () => {
-        router.push('/gateway/dynamic/routes')
+        router.push('/gateway/whitelist/routes')
     }
 
     /**
      * 新增动态路由信息
      * @param 动态路由参数
      */
-    update = (params) => {
+    add = (params) => {
         const {dispatch} = this.props
         dispatch({
-          type: 'gatewayRoutes/update',
+          type: 'whitelist/add',
           payload: params,
         });
     }
@@ -51,11 +53,7 @@ class AddRoute extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
           if (!err) {
-            const {
-                id
-            } = this.props.location.state
-            values.id = id;
-            this.update(values)
+            this.add(values)
           }
         });
     }
@@ -63,20 +61,6 @@ class AddRoute extends Component {
     render(){
 
         const { getFieldDecorator } = this.props.form;
-
-        const {
-            id,
-            path,
-            serviceId,
-            url,
-            stripPrefix,
-            retryable,
-            enabled,
-            domainId,
-            apiDoc,
-            apiName
-        } = this.props.location.state
-
         const {submiting} = this.props;
 
         const formItemLayout = {
@@ -91,7 +75,7 @@ class AddRoute extends Component {
         };
 
         return (
-          <PageHeaderWrapper title="编辑动态路由">
+          <PageHeaderWrapper title="添加白名单">
             <Card>
                 <Form onSubmit={this.check}>
                     <Form.Item
@@ -99,7 +83,6 @@ class AddRoute extends Component {
                         label="路由"
                         hasFeedback>
                         {getFieldDecorator('path', {
-                            initialValue: path,
                             rules: [{
                                 required: true,
                                 message: '请输入路由地址，如: /gateway/**',
@@ -110,34 +93,20 @@ class AddRoute extends Component {
                     </Form.Item>
                     <FormItem
                         {...formItemLayout}
-                        label="服务ID">
-                        {getFieldDecorator('serviceId',{
-                            initialValue: serviceId,
+                        label="请求方法">
+                        {getFieldDecorator('method',{
                         })(
-                            <Input></Input>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="服务URL地址"
-                        >
-                        {getFieldDecorator('url',{
-                            initialValue: url,
-                        })(
-                            <Input></Input>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="忽略前缀"
-                        >
-                        {getFieldDecorator('stripPrefix',{
-                            initialValue: stripPrefix,
-                        })(
-                            <RadioGroup>
-                                <Radio value={true}>是</Radio>
-                                <Radio value={false}>否</Radio>
-                            </RadioGroup>
+                          <Select
+                            defaultValue="GET"
+                            showSearch
+                            placeholder="请求方法"
+                            optionFilterProp="children"
+                          >
+                            <Option value="GET">GET</Option>
+                            <Option value="POST">POST</Option>
+                            <Option value="PUT">PUT</Option>
+                            <Option value="DELETE">DELETE</Option>
+                          </Select>
                         )}
                     </FormItem>
                     <FormItem
@@ -145,7 +114,7 @@ class AddRoute extends Component {
                         label="是否有效"
                         >
                         {getFieldDecorator('enabled',{
-                            initialValue: enabled
+                            initialValue: true
                         })(
                             <RadioGroup>
                                 <Radio value={true}>是</Radio>
@@ -155,45 +124,11 @@ class AddRoute extends Component {
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label="是否重试"
-                        >
-                        {getFieldDecorator('retryable',{
-                            initialValue: retryable
-                        })(
-                            <RadioGroup>
-                                <Radio value={true}>是</Radio>
-                                <Radio value={false}>否</Radio>
-                            </RadioGroup>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="服务中文名"
-                        >
-                        {getFieldDecorator('apiName',{
-                            initialValue: apiName
-                        })(
-                            <Input></Input>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
                         label="所属域"
                         >
                         {getFieldDecorator('domainId',{
-                            initialValue: domainId,
                         })(
                             <Input></Input>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="API文档"
-                        >
-                        {getFieldDecorator('apiDoc',{
-                            initialValue: apiDoc
-                        })(
-                            <Input placeholder="https://localhost:8080/demo/swagger-ui.html"></Input>
                         )}
                     </FormItem>
                     <Divider />
