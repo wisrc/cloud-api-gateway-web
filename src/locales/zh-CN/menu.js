@@ -38,4 +38,5 @@ export default {
   'menu.gateway': '网关管理',
   'menu.gateway.manage': '路由管理',
   'menu.gateway.whitelist': '白名单管理',
+  'menu.gateway.loggerList': '日志管理',
 };

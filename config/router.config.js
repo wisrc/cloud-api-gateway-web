@@ -71,6 +71,11 @@ export default [
             path: '/gateway/whitelist/routes/update',
             component: './Gateway/WhiteListUpdate',
           },
+          {
+            path: '/gateway/LoggerList/routes',
+            name: 'loggerList',
+            component: './Gateway/LoggerListIndex',
+          },
         ],
       },
       {
