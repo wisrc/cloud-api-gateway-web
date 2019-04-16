@@ -9,7 +9,7 @@ const FooterView = () => (
       links={[
         {
           key: 'MicroService',
-          title: '微服务管理',
+          title: '物联网研发平台',
           href: '/',
           blankTarget: false,
         },

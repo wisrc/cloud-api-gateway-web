@@ -41,6 +41,102 @@ export default [
         ],
       },
       {
+        path: '/system',
+        name: 'system',
+        icon: 'form',
+        routes: [
+          {
+            path: '/system/user',
+            name: 'user',
+            component: './System/Index',
+          },
+          {
+            path: '/gateway/user/add',
+            component: './Gateway/AddRoute',
+          },
+          {
+            path: '/gateway/user/update',
+            component: './Gateway/UpdateRoute',
+          },
+          {
+            path: '/system/role',
+            name: 'role',
+            component: './System/RoleIndex',
+          },
+          {
+            path: '/gateway/role/add',
+            component: './Gateway/WhiteListAdd',
+          },
+          {
+            path: '/gateway/role/update',
+            component: './Gateway/WhiteListUpdate',
+          },
+          {
+            path: '/system/orgunization',
+            name: 'orgunization',
+            component: './System/OrgIndex',
+          },
+          {
+            path: '/system/grant',
+            name: 'grant',
+            component: './System/GrantIndex',
+          }
+        ],
+      },
+      {
+        path: '/project',
+        name: 'project',
+        icon: 'form',
+        routes: [
+          {
+            path: '/project/create',
+            name: 'create',
+            component: './Project/AddProject',
+          },
+          {
+            path: '/project/list',
+            name: 'list',
+            component: './Project/Index',
+          },
+          {
+            path: '/gateway/project/add',
+            component: './Gateway/AddRoute',
+          },
+          {
+            path: '/gateway/project/update',
+            component: './Gateway/UpdateRoute',
+          },
+          {
+            path: '/project/grant',
+            name: 'grant',
+            component: './Project/GrantIndex',
+          },
+          {
+            path: '/gateway/role/add',
+            component: './Gateway/WhiteListAdd',
+          },
+          {
+            path: '/gateway/role/update',
+            component: './Gateway/WhiteListUpdate',
+          },
+          {
+            path: '/project/archive',
+            name: 'archive',
+            component: './Project/ArchiveIndex',
+          },
+          {
+            path: '/project/show',
+            name: 'show',
+            component: './Project/ShowIndex',
+          },
+          {
+            path: '/project/participate',
+            name: 'participate',
+            component: './Project/ParticipateIndex',
+          }
+        ],
+      },
+      {
         path: '/gateway',
         name: 'gateway',
         icon: 'form',
@@ -79,7 +175,179 @@ export default [
         ],
       },
       {
-        name: 'account',
+        path: '/device',
+        name: 'device',
+        icon: 'form',
+        routes: [
+          {
+            path: '/gateway/device/certificate',
+            name: 'certificate',
+            component: './Gateway/LoggerListIndex',
+          },
+          {
+            path: '/gateway/user',
+            name: 'register',
+            component: './Gateway/Index',
+          },
+          {
+            path: '/gateway/user/add',
+            component: './Gateway/AddRoute',
+          },
+          {
+            path: '/gateway/user/update',
+            component: './Gateway/UpdateRoute',
+          },
+          {
+            path: '/gateway/role',
+            name: 'list',
+            component: './Gateway/WhiteListIndex',
+          },
+          {
+            path: '/gateway/role/add',
+            component: './Gateway/WhiteListAdd',
+          },
+          {
+            path: '/gateway/role/update',
+            component: './Gateway/WhiteListUpdate',
+          },
+          {
+            path: '/gateway/orgunization',
+            name: 'MQTT',
+            component: './Gateway/LoggerListIndex',
+          }
+        ],
+      },
+      {
+        path: '/cms',
+        name: 'cms',
+        icon: 'form',
+        routes: [
+          {
+            path: '/gateway/user',
+            name: 'notice',
+            component: './Gateway/Index',
+          },
+          {
+            path: '/gateway/user/add',
+            component: './Gateway/AddRoute',
+          },
+          {
+            path: '/gateway/user/update',
+            component: './Gateway/UpdateRoute',
+          },
+          {
+            path: '/gateway/role',
+            name: 'broadcast',
+            component: './Gateway/WhiteListIndex',
+          },
+          {
+            path: '/gateway/role/add',
+            component: './Gateway/WhiteListAdd',
+          },
+          {
+            path: '/gateway/role/update',
+            component: './Gateway/WhiteListUpdate',
+          },
+          {
+            path: '/gateway/orgunization',
+            name: 'news',
+            component: './Gateway/LoggerListIndex',
+          },
+          {
+            path: '/gateway/grant',
+            name: '静态资源',
+            component: './Gateway/LoggerListIndex',
+          }
+        ],
+      },
+      {
+        path: '/activity',
+        name: 'activity',
+        icon: 'form',
+        routes: [
+          {
+            path: '/gateway/user',
+            name: 'create',
+            component: './Gateway/Index',
+          },
+          {
+            path: '/gateway/user/add',
+            component: './Gateway/AddRoute',
+          },
+          {
+            path: '/gateway/user/update',
+            component: './Gateway/UpdateRoute',
+          },
+          {
+            path: '/gateway/role',
+            name: 'list',
+            component: './Gateway/WhiteListIndex',
+          },
+          {
+            path: '/gateway/role/add',
+            component: './Gateway/WhiteListAdd',
+          },
+          {
+            path: '/gateway/role/update',
+            component: './Gateway/WhiteListUpdate',
+          },
+          {
+            path: '/gateway/orgunization',
+            name: 'enroll',
+            component: './Gateway/LoggerListIndex',
+          }
+        ],
+      },
+      {
+        path: '/material',
+        name: 'material',
+        icon: 'form',
+        routes: [
+          {
+            path: '/gateway/user',
+            name: 'classify',
+            component: './Gateway/Index',
+          },
+          {
+            path: '/gateway/user/add',
+            component: './Gateway/AddRoute',
+          },
+          {
+            path: '/gateway/user/update',
+            component: './Gateway/UpdateRoute',
+          },
+          {
+            path: '/gateway/role',
+            name: 'list',
+            component: './Gateway/WhiteListIndex',
+          },
+          {
+            path: '/gateway/role/add',
+            component: './Gateway/WhiteListAdd',
+          },
+          {
+            path: '/gateway/role/update',
+            component: './Gateway/WhiteListUpdate',
+          },
+          {
+            path: '/gateway/orgunization',
+            name: 'apply',
+            component: './Gateway/LoggerListIndex',
+          },
+          {
+            path: '/gateway/orgunization',
+            name: 'purchase',
+            component: './Gateway/LoggerListIndex',
+          },
+          {
+            path: '/gateway/grant',
+            name: 'add',
+            component: './Gateway/LoggerListIndex',
+          }
+        ],
+      },
+      {
+        // name: 'account',
         icon: 'user',
         path: '/account',
         routes: [
