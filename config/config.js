@@ -74,7 +74,7 @@ export default {
   },
   proxy: {
     '/server': {
-      target: 'http://localhost:8791',
+      target: 'http://182.254.165.72:8791',
       changeOrigin: true,
       pathRewrite: { '^/server': '' },
     },
