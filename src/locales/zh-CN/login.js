@@ -7,7 +7,7 @@ export default {
   'app.login.tab-login-mobile': '手机号登录',
   'app.login.remember-me': '自动登录',
   'app.login.forgot-password': '忘记密码',
-  'app.login.sign-in-with': '其他登录方式',
+  'app.login.sign-in-with': '还没有申请账号',
   'app.login.signup': '注册账户',
   'app.login.login': '登录',
   'app.register.register': '注册',

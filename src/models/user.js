@@ -1,4 +1,4 @@
-import { query as queryUsers, queryCurrent } from '@/services/user';
+import { query as queryUsers, queryCurrent, queryUserList } from '@/services/user';
 
 export default {
   namespace: 'user',
@@ -6,6 +6,7 @@ export default {
   state: {
     list: [],
     currentUser: {},
+    userList: [],
   },
 
   effects: {
@@ -23,6 +24,13 @@ export default {
         payload: response,
       });
     },
+    *queryUserList(_, {call, put}){
+      const response = yield call(queryUserList);
+      yield put({
+        type: 'saveUserList',
+        payload: response,
+      })
+    }
   },
 
   reducers: {
@@ -36,6 +44,12 @@ export default {
       return {
         ...state,
         currentUser: action.payload || {},
+      };
+    },
+    saveUserList(state, action){
+      return {
+        ...state,
+        userList: action.payload,
       };
     },
     changeNotifyCount(state, action) {

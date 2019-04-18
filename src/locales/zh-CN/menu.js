@@ -62,6 +62,7 @@ export default {
   'menu.cms.notice':'公告管理',
   'menu.cms.broadcast':'消息广播',
   'menu.cms.news':'新闻动态',
+  'menu.cms.staticResource':'静态资源',
   'menu.activity':'活动管理',
   'menu.activity.create':'发起活动',
   'menu.activity.list':'活动列表',

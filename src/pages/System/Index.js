@@ -10,9 +10,9 @@ import { connect } from 'dva';
 import styles from './Index.less'
 import router from 'umi/router';
 
-@connect(({ gatewayRoutes, loading }) => ({
-  gatewayRoutes,
-  loading: loading.models.gatewayRoutes,
+@connect(({ user, loading }) => ({
+  user,
+  loading: loading.models.user,
 }))
 class User extends Component {
   columns = [
@@ -26,23 +26,22 @@ class User extends Component {
     },
     {
       title: '账号',
-      dataIndex: 'path',
+      dataIndex: 'userId',
       align: 'left',
     },
     {
       title: '姓名',
-      dataIndex: 'serviceId',
-      align: 'left',
+      dataIndex: 'username',
+      align: 'center',
     },
     {
       title: '手机号',
-      dataIndex: 'url',
-      align: 'left',
+      dataIndex: 'mobile',
+      align: 'center',
     },
     {
       title: '微信号',
-      width: 80,
-      dataIndex: 'stripPrefix',
+      dataIndex: 'weixin',
       align: 'center',
       render: (text, record)=>{
         const desc = text === true ? '是' : '否';
@@ -53,24 +52,17 @@ class User extends Component {
     },
     {
       title: 'QQ号',
-      dataIndex: 'apiName',
+      dataIndex: 'qq',
       align: 'center',
     },
     {
       title: '邮箱',
-      width:50,
-      dataIndex: 'retryable',
-      align: 'center',
-      render: (text, record)=>{
-          const desc = text === true ? '是' : '否';
-          return (
-            desc
-          )
-      }
+      dataIndex: 'email',
+      align: 'right',
     },
     {
       title: '生效',
-      dataIndex: 'enabled',
+      dataIndex: 'enable',
       width: 50,
       align: 'center',
       render: (text, record)=>{
@@ -82,16 +74,13 @@ class User extends Component {
     },
     {
       title: '入学年份',
-      dataIndex: 'domainId',
+      dataIndex: 'enrollmentYear',
       align: 'center',
     },
     {
       title: '常住城市',
-      dataIndex: 'apiDoc',
+      dataIndex: 'liveCity',
       align: 'center',
-      render: (text, record, index) => (
-          <a target="blank" href={text}>{text}</a>
-      )
     },
     {
       title: '操作',
@@ -100,7 +89,7 @@ class User extends Component {
       render: (text, record, index) => (
         <div>
           <Button onClick={() => this.update(record)} size="small" ghost type="primary">编辑</Button>
-          <Button onClick={() => this.delete(record)} size="small" ghost type="danger" style={{marginLeft:6+'px'}}>删除</Button>
+          <Button onClick={() => this.delete(record)} size="small" ghost type="danger" style={{marginLeft:6+'px'}}>禁用</Button>
         </div>
       )
     },
@@ -111,12 +100,7 @@ class User extends Component {
   }
 
   refresh = () => {
-    const {dispatch} = this.props;
-    dispatch({
-      type: 'gatewayRoutes/refresh'
-    }).then(() => {
-      this.getRoutes()
-    })
+    this.getUserList()
   }
 
   delete = (item) => {
@@ -136,25 +120,24 @@ class User extends Component {
     })
   }
 
-  getRoutes = () => {
-    const { dispatch, gatewayRoutes } = this.props;
+  getUserList = () => {
+    const { dispatch, user } = this.props;
     dispatch({
-      type: 'gatewayRoutes/fetch',
+      type: 'user/queryUserList',
     });
   }
   
   componentDidMount() {
-    this.getRoutes()
+    this.getUserList()
   }
 
   render() {
-    const { gatewayRoutes, loading } = this.props;
+    const { user, loading } = this.props;
 
     return (
       <PageHeaderWrapper title="成员管理">
         <Card>
           <div className={styles.btnGroup}>
-              <Button onClick={this.add} className={styles.btnItem} type="primary" ghost>新增</Button>
               <Button onClick={this.refresh} className={styles.btnItem} type="primary" ghost>刷新</Button>
           </div>
           <Table
@@ -162,7 +145,7 @@ class User extends Component {
             bordered
             size="small"
             loading={loading}
-            dataSource={gatewayRoutes.gatewayRoutesList}
+            dataSource={user.userList}
             columns={this.columns}
           />
         </Card>

@@ -255,7 +255,7 @@ export default [
           },
           {
             path: '/gateway/grant',
-            name: '静态资源',
+            name: 'staticResource',
             component: './Gateway/LoggerListIndex',
           }
         ],

@@ -9,5 +9,5 @@ module.exports = {
   menu: {
     disableLocal: false,
   },
-  title: '网关管理',
+  title: '物联网综合研发管理平台',
 };
