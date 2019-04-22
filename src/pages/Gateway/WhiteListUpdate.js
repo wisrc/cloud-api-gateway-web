@@ -12,7 +12,7 @@ import {
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import FormItem from 'antd/lib/form/FormItem';
-import styles from './WhiteListupdate.less';
+import styles from './WhiteListUpdate.less';
 import router from 'umi/router';
 import { connect } from 'dva';
 
