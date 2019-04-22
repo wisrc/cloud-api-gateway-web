@@ -35,7 +35,7 @@ const userList = [{
 },{
     id: '005',
     userId: 'hzwy23',
-    username: '刘雷',
+    username: '小朋友',
     mobile: '18581530028',
     weixin: 'hzwy23',
     qq: '309810957',
